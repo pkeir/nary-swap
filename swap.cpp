@@ -1,9 +1,21 @@
 #include <iostream>
 #include "swap.hpp"
 
+template <typename T>
+constexpr bool test3() 
+{
+  using namespace nary;
+  T a1 = 1, a2 = 2, a3 = 3;
+  swap(a1,a2,a3);
+  swap(a1,a2,a3);
+  swap(a1,a2,a3);
+  return a1 == 1 && a2 == 2 && a3 == 3;
+}
+
 int main(int argc, char *argv[])
 {
   using namespace nary;
+  static_assert(test3<int>());
 
   double d{3.14};
   swap(d);
