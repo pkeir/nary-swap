@@ -1,6 +1,6 @@
+#include "swap.hpp"
 #include <iostream>
 #include <tuple>
-#include "swap.hpp"
 
 template <typename T>
 constexpr bool test_3()
@@ -29,13 +29,12 @@ constexpr bool test_n(Ts &...xs)
 
 template <auto I, auto ...Is>
 constexpr bool run_tests(std::index_sequence<I,Is...>) {
-  return (... && test_n<Is>());
+  return test_3<char>() && (... && test_n<Is>());
 }
 
 int main(int argc, char *argv[])
 {
   using namespace nary;
-  static_assert(test_3<int>());
   static_assert(run_tests(std::make_index_sequence<10>{}));
 
   double d{3.14};
