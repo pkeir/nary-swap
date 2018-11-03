@@ -4,11 +4,11 @@
 namespace nary {
 
 template <typename T, typename ...Ts>
-void swap(T &x, Ts &...xs)
+constexpr void swap(T &x, Ts &...xs)
 {
   T tmp = std::move(x);
   struct wrap {
-    wrap &operator+(wrap &&w) { x = std::move(w.x); return w; }
+    constexpr wrap &operator+(wrap &&w) { x = std::move(w.x); return w; }
     T &x;
   };
   auto c = [](auto &...xs) { (... + wrap{xs}); };
@@ -19,7 +19,7 @@ void swap(T &x, Ts &...xs)
 
 /*
 template <typename T>
-void swap(T &t1, T &t2)
+constexpr void swap(T &t1, T &t2)
 {
   T temp = std::move(t1);
   t1 = std::move(t2);
