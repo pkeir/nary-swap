@@ -1,3 +1,6 @@
+#include <utility>
+#include <type_traits>
+
 // A version of std::swap which works for 1 or more variables using C++17 fold
 // expressions.
 
@@ -5,6 +8,10 @@ namespace nary {
 
 template <typename T, typename ...Ts>
 constexpr void swap(T &x, Ts &...xs)
+noexcept (
+  std::is_nothrow_move_constructible_v<T> &&
+  std::is_nothrow_move_assignable_v<T>
+)
 {
   T tmp = std::move(x);
   struct wrap {
