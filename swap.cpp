@@ -16,9 +16,9 @@ template <std::size_t N, typename ...Ts>
 constexpr bool test_n(Ts &...xs)
 {
   if constexpr (N==sizeof...(xs)) {
-    std::tuple before(xs...);
+    std::tuple before = std::make_tuple(xs...);
     for (int i = 0; i < N; i++) { nary::swap(xs...); }
-    std::tuple  after(xs...);
+    std::tuple after  = std::make_tuple(xs...);
     return before==after;
   }
   else {
