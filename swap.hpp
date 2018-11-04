@@ -6,6 +6,8 @@
 
 namespace nary {
 
+constexpr void swap() {}
+
 template <typename T, typename ...Ts>
 constexpr void swap(T &x, Ts &...xs)
 noexcept (

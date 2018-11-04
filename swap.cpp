@@ -27,8 +27,8 @@ constexpr bool test_n(Ts &...xs)
   }
 }
 
-template <auto I, auto ...Is>
-constexpr bool run_tests(std::index_sequence<I,Is...>) {
+template <auto ...Is>
+constexpr bool run_tests(std::index_sequence<Is...>) {
   return (test_3<char>() && ... && test_n<Is>());
 }
 
