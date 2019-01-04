@@ -11,8 +11,9 @@ constexpr void swap() {}
 template <typename T, typename ...Ts>
 constexpr void swap(T &x, Ts &...xs)
 noexcept (
-  std::is_nothrow_move_constructible_v<T> &&
-  std::is_nothrow_move_assignable_v<T>
+  std::is_nothrow_move_constructible_v<T>   &&
+  std::is_nothrow_move_assignable_v<T>      &&
+  std::conjunction_v<std::is_same<T,Ts>...>
 )
 {
   T tmp = std::move(x);
