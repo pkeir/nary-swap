@@ -17,7 +17,7 @@ noexcept (
 {
   T tmp = std::move(x);
   struct wrap {
-    constexpr wrap &operator+(wrap &&w) { x = std::move(w.x); return w; }
+    constexpr wrap operator+(wrap &&w) { x = std::move(w.x); return w; }
     T &x;
   };
   auto c = [](auto &...xs) { (... + wrap{xs}); };
