@@ -1,7 +1,7 @@
 #include <utility>
 #include <type_traits>
 
-// A version of std::swap which works for 1 or more variables using C++17 fold
+// A version of std::swap which works for 0 or more variables using C++17 fold
 // expressions.
 
 namespace nary {
