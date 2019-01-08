@@ -1,8 +1,10 @@
-#include <utility>
-#include <type_traits>
+// Copyright (c) 2019 Paul Keir, University of the West of Scotland.
 
 // A version of std::swap which works for 0 or more variables using C++17 fold
 // expressions.
+
+#include <utility>
+#include <type_traits>
 
 namespace nary {
 

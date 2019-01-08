@@ -1,3 +1,5 @@
+// Copyright (c) 2019 Paul Keir, University of the West of Scotland.
+
 #include "swap.hpp"
 #include <iostream>
 #include <tuple>
