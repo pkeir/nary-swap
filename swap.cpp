@@ -3,6 +3,8 @@
 #include "swap.hpp"
 #include <iostream>
 #include <tuple>
+#include <vector>
+#include <cassert>
 
 template <typename T>
 constexpr bool test_3()
@@ -57,6 +59,11 @@ int main(int argc, char *argv[])
   std::cout << x << ',' << y << '\n'; // 8,7
   swap(x,y);  
   std::cout << x << ',' << y << '\n'; // 7,8
+
+  const std::vector<int> v1_orig{1,2}, v2_orig{3,4,5}, v3_orig{6,7,8,9};
+        std::vector<int> v1(v1_orig),  v2(v2_orig),    v3(v3_orig);
+  swap(v1,v2,v3);
+  assert(v1==v2_orig && v2==v3_orig && v3==v1_orig);
 
   int a1 = 1, a2 = 2, a3 = 3;
   std::cout << a1 << ',' << a2 << ',' << a3 << '\n'; // 1,2,3

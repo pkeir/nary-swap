@@ -25,7 +25,7 @@ noexcept (
     T &x;
   };
   auto c = [](auto &...xs) { (... + wrap{xs}); };
-  c(tmp,x,xs...,tmp);
+  c(x,xs...,tmp);
 }
 
 constexpr void swapr() {}
@@ -45,7 +45,7 @@ noexcept (
     T &x;
   };
   auto c = [](auto &...xs) { (wrap{xs} + ...); };
-  c(tmp,x,xs...,tmp);
+  c(x,xs...,tmp);
 }
 
 } // namespace nary
