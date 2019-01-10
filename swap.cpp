@@ -11,7 +11,12 @@ constexpr bool test_3()
   nary::swap(a1,a2,a3);
   nary::swap(a1,a2,a3);
   nary::swap(a1,a2,a3);
-  return a1 == 1 && a2 == 2 && a3 == 3;
+  bool left  = (a1 == 1 && a2 == 2 && a3 == 3);
+  nary::swapr(a1,a2,a3);
+  nary::swapr(a1,a2,a3);
+  nary::swapr(a1,a2,a3);
+  bool right = (a1 == 1 && a2 == 2 && a3 == 3);
+  return left && right;
 }
 
 template <std::size_t N, typename ...Ts>
@@ -19,9 +24,13 @@ constexpr bool test_n(Ts &...xs)
 {
   if constexpr (N==sizeof...(xs)) {
     std::tuple before = std::make_tuple(xs...);
-    for (int i = 0; i < N; i++) { nary::swap(xs...); }
+    for (std::size_t i = 0; i < N; i++) { nary::swap(xs...); }
     std::tuple after  = std::make_tuple(xs...);
-    return before==after;
+    bool left  = (before==after);
+    for (std::size_t i = 0; i < N; i++) { nary::swapr(xs...); }
+    std::tuple afterr = std::make_tuple(xs...);
+    bool right = (before==afterr);
+    return left && right;
   }
   else {
     std::size_t x{sizeof...(xs)};
@@ -31,7 +40,7 @@ constexpr bool test_n(Ts &...xs)
 
 template <auto ...Is>
 constexpr bool run_tests(std::index_sequence<Is...>) {
-  return (test_3<char>() && ... && test_n<Is>());
+  return ((test_3<char>() && ... && test_n<Is>()));
 }
 
 int main(int argc, char *argv[])
