@@ -21,11 +21,31 @@ noexcept (
 {
   T tmp = std::move(x);
   struct wrap {
-    constexpr wrap operator+(wrap &&w) { x = std::move(w.x); return w; }
+    constexpr wrap operator+(wrap &&w) { x = std::move(w.x); return     w; }
     T &x;
   };
   auto c = [](auto &...xs) { (... + wrap{xs}); };
-  c(x,xs...,tmp);
+  c(tmp,x,xs...,tmp);
+}
+
+constexpr void swapr() {}
+
+template <typename T, typename ...Ts>
+constexpr
+std::enable_if_t<std::conjunction_v<std::is_same<T,Ts>...>>
+swapr(T &x, Ts &...xs)
+noexcept (
+  std::is_nothrow_move_constructible_v<T> &&
+  std::is_nothrow_move_assignable_v<T>
+)
+{
+  T tmp = std::move(x);
+  struct wrap {
+    constexpr wrap operator+(wrap &&w) { w.x = std::move(x); return *this; }
+    T &x;
+  };
+  auto c = [](auto &...xs) { (wrap{xs} + ...); };
+  c(tmp,x,xs...,tmp);
 }
 
 } // namespace nary
@@ -38,5 +58,12 @@ constexpr void swap(T &t1, T &t2)
   t1 = std::move(t2);
   t2 = std::move(temp);
 }
-*/
 
+template <typename T>
+constexpr void swapr(T &t1, T &t2)
+{
+  T temp = std::move(t2);
+  t2 = std::move(t1);
+  t1 = std::move(temp);
+}
+*/
