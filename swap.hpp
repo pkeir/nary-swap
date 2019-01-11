@@ -8,7 +8,7 @@
 
 namespace nary {
 
-constexpr void swap() {}
+constexpr void swap() noexcept {}
 
 template <typename T, typename ...Ts>
 constexpr
@@ -28,24 +28,25 @@ noexcept (
   c(x,xs...,tmp);
 }
 
-constexpr void swapr() {}
+                      constexpr void swapr()    noexcept {}
+template <typename T> constexpr void swapr(T &) noexcept {}
 
 template <typename T, typename ...Ts>
 constexpr
 std::enable_if_t<std::conjunction_v<std::is_same<T,Ts>...>>
-swapr(T &x, Ts &...xs)
+swapr(T & x, Ts &...xs)
 noexcept (
   std::is_nothrow_move_constructible_v<T> &&
   std::is_nothrow_move_assignable_v<T>
 )
 {
-  T tmp = std::move(x);
+  T tmp = std::move((xs , ...));
   struct wrap {
     constexpr wrap operator+(wrap &&w) { w.x = std::move(x); return *this; }
     T &x;
   };
   auto c = [](auto &...xs) { (wrap{xs} + ...); };
-  c(x,xs...,tmp);
+  c(tmp,x,xs...);
 }
 
 } // namespace nary
