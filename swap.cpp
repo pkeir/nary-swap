@@ -4,6 +4,7 @@
 #include <iostream>
 #include <tuple>
 #include <vector>
+#include <memory>
 #include <cassert>
 
 template <typename T>
@@ -14,11 +15,11 @@ constexpr bool test_3()
   nary::swap(a1,a2,a3);
   nary::swap(a1,a2,a3);
   bool left  = (a1 == 1 && a2 == 2 && a3 == 3);
-  nary::swapr(a1,a2,a3);
-  nary::swapr(a1,a2,a3);
-  nary::swapr(a1,a2,a3);
-  bool right = (a1 == 1 && a2 == 2 && a3 == 3);
-  return left && right;
+//  nary::swapr(a1,a2,a3);
+//  nary::swapr(a1,a2,a3);
+//  nary::swapr(a1,a2,a3);
+//  bool right = (a1 == 1 && a2 == 2 && a3 == 3);
+  return left;// && right;
 }
 
 template <std::size_t N, typename ...Ts>
@@ -29,10 +30,10 @@ constexpr bool test_n(Ts &...xs)
     for (std::size_t i = 0; i < N; i++) { nary::swap(xs...); }
     std::tuple after  = std::make_tuple(xs...);
     bool left  = (before==after);
-    for (std::size_t i = 0; i < N; i++) { nary::swapr(xs...); }
-    std::tuple afterr = std::make_tuple(xs...);
-    bool right = (before==afterr);
-    return left && right;
+//    for (std::size_t i = 0; i < N; i++) { nary::swapr(xs...); }
+//    std::tuple afterr = std::make_tuple(xs...);
+//    bool right = (before==afterr);
+    return left;// && right;
   }
   else {
     std::size_t x{sizeof...(xs)};
@@ -54,7 +55,7 @@ int main(int argc, char *argv[])
   swap(d);
   std::cout << d << '\n';
 
-  int x = 7, y = 8;
+  int x{7}, y{8};
   swap(x,y);
   std::cout << x << ',' << y << '\n'; // 8,7
   swap(x,y);  
@@ -65,7 +66,13 @@ int main(int argc, char *argv[])
   swap(v1,v2,v3);
   assert(v1==v2_orig && v2==v3_orig && v3==v1_orig);
 
-  int a1 = 1, a2 = 2, a3 = 3;
+        auto p1      = std::make_unique<int>(42);
+        auto p2      = std::make_unique<int>(43);
+        auto p3      = std::make_unique<int>(44);
+  swap(p1,p2,p3);
+  assert(*p1==43 && *p2==44 && *p3==42);
+
+  int a1{1}, a2{2}, a3{3};
   std::cout << a1 << ',' << a2 << ',' << a3 << '\n'; // 1,2,3
   swap(a1,a2,a3);
   std::cout << a1 << ',' << a2 << ',' << a3 << '\n'; // 2,3,1
