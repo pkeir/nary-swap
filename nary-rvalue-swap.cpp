@@ -61,6 +61,8 @@ int main(int argc, char *argv[])
   std::cout << x << ',' << y << '\n'; // 8,7
   swap(x,y);  
   std::cout << x << ',' << y << '\n'; // 7,8
+  //swap(x,8); // error
+  //std::cout << x << ',' << y << '\n'; // 8,8
 
   const std::vector<int> v1_orig{1,2}, v2_orig{3,4,5}, v3_orig{6,7,8,9};
         std::vector<int> v1(v1_orig),  v2(v2_orig),    v3(v3_orig);
