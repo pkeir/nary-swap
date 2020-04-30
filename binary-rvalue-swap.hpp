@@ -28,7 +28,7 @@ noexcept (
   x2 = std::move(temp);
 }
 
-constexpr bool test() {
+constexpr bool test_binary() {
   int x1 = 1, y1 = 2;
   swap(x1,y1);
   bool b1 = x1==2 && y1==1;
@@ -46,7 +46,7 @@ constexpr bool test() {
   return b1&&b2&&b3;
 }
 
-static_assert(test());
+static_assert(test_binary());
 
 } // namespace nary
 
