@@ -19,11 +19,14 @@ static_assert(!is_one_of<A,int>::value);
 
 template <typename T>
 struct wrapl {
-  template <typename U>
-//  constexpr wrap<U> operator+(wrap<U> w) { w.x.v = x.v+1; return w; }
-  constexpr auto operator+(wrapl<U> w) { w.x.v = x.v+1; return w; }
+//  template <typename U>
+//  constexpr auto operator+(wrapl<U> w) { w.x.v = x.v+1; return w; }
   T x;
 };
+
+// more readable?
+template <typename U, typename V>
+constexpr auto operator+(wrapl<U> w,wrapl<V> u) { u.x.v = w.x.v+1; return u; }
 
 template <typename T, typename ...Ts>
 constexpr

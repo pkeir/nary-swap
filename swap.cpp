@@ -1,4 +1,4 @@
-// Copyright (c) 2019 Paul Keir, University of the West of Scotland.
+// Copyright (c) 2019-2020 Paul Keir, University of the West of Scotland.
 
 #include "swap.hpp"
 #include <iostream>
